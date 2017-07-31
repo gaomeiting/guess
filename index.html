@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+ <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>疯狂猜图</title>
+        <meta name="description" content="好玩的看图猜词游戏，知识面大考验，脑力激荡～">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link href="css/ui.progress-bar.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="css/main.css">
+        
+        <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+       <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+
+        	<script>
+	    var isLoadFromCookie;
+	    var myFlag
+	    var myAnswer;
+	    function on_wx_share_succ() {
+	        if (myFlag) alert(myAnswer[Math.floor((Math.random() * myAnswer.length))]);
+	    }
+	</script>
+
+        	<script>
+	(function() {
+	    //updateShare(0);
+	})();
+	var qikeContentPreSet = {
+	    shareContent: {
+	        'imgUrl': 'http://www.play68.com/resources/images/icons/fkct.png',
+	        'link': window.location.href,
+	        'desc': '疯狂猜图',
+	        'title': '空中传媒网络科技游戏平台,最好玩的微信游戏平台'
+	    },
+	    endShareContentTitle: '我在疯狂猜图游戏里面大杀四方',
+	    endShareContentPreFix: '哈哈哈，我在游戏里面玩到了第',
+	    // 结束分享内容前缀
+	    endShareContentSuffix: '关，快来挑战我吧！！！' // 结束分享内容后缀
+	};
+        	</script>
+    </head>
+<body onload="init();" ontouchstart=""  >
+	<div id="page-start" class="page current-page">
+	    <!-- <div class="header-container">
+	        <header class="wrapper clearfix">
+	            <a class="btn btn-info btn-left btn-hide" href="">
+	                返回
+	            </a>
+	            <h1 class="title">
+	                疯狂猜图
+	            </h1>
+	            <a class="btn btn-info btn-openHelpPannel"><i class="icon-more icon"></i></a>
+	        </header>
+	    </div> -->
+	    <div class="main-container">
+	        <div class="main wrapper clearfix">
+	            <article>
+	                <div id="start-icon" style="background:url(./img/icon-511.png); background-size: 100%;">
+	                    <div id="start-level">
+	                        0
+	                    </div>
+	                </div>
+	            </article>
+	            <aside class="loading">
+	                <a id="start-btnPlay" class="btn btn-success btn-big">
+	                    Play
+	                </a>
+	            </aside>
+	        </div>
+	        <!-- #main -->
+	    </div>
+	    <div class="footer-container">
+	        <footer class="wrapper">
+	        </footer>
+	    </div>
+	</div>
+	<div class="header-container header-container-undefind">
+	 </div>
+	<!-- #page-start -->
+	<div id="page-play" class="page none">
+	    <div class="header-container">
+	        <header class="wrapper clearfix">
+	            <!-- <a class="btn btn-info btn-left btn-hide" href="">
+	                返回
+	            </a> -->
+	            <a id="play-level">
+	                0
+	            </a>
+	            <!-- <a class="btn btn-info btn-openHelpPannel" style="background:Black;color:white "
+	            onclick="share()">
+	                分享有提示
+	            </a> -->
+	        </header>
+	    </div>
+	    <div class="main-container">
+	        <div class="main wrapper clearfix">
+	            <div id="questions">
+	            </div>
+	        </div>
+	        <!-- #main -->
+	    </div>
+	    <div id="play-success">
+	        <div class="main wrapper clearfix">
+	            <section id="play-success-title">
+	                答案正确
+	            </section>
+	            <section id="play-success-level">
+	                0
+	            </section>
+	            <section id="play-success-answer">
+	            </section>
+	            <section id="play-success-action">
+	                <!-- <a id="play-success-share" class="btn btn-info btn-openHelpPannel " onclick="javascript:share();">
+	                    <i class="icon-more icon">
+	                    </i>
+	                    别点我！
+	                </a> -->
+	                <a id="play-success-next" class="btn btn-success">
+	                    下一题
+	                </a>
+	            </section>
+	        </div>
+	    </div>
+	</div>
+	<!-- #page-play -->
+	<div id="page-preload" class="page none">
+	    <!-- <div class="header-container">
+	        <header class="wrapper clearfix">
+	            <h1 class="title">
+	                疯狂猜图
+	            </h1>
+	        </header>
+	    </div> -->
+	    <div class="main-container">
+	        <div class="main wrapper clearfix">
+	            <div id="progress_bar_container">
+	                <div id="progress_bar" class="ui-progress-bar ui-container">
+	                    <div class="ui-progress" style="display:none;">
+	                        <span class="ui-label" style="display:none;">
+	                            Processing
+	                            <b class="value">
+	                            </b>
+	                        </span>
+	                    </div>
+	                    <!-- .ui-progress -->
+	                </div>
+	                <!-- #progress_bar -->
+	            </div>
+	            <div id="preload-ad">
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div id="page-finish" class="page none">
+	    <!-- <div class="header-container">
+	        <header class="wrapper clearfix">
+	            <a class="btn btn-info btn-left btn-hide" href="">
+	                返回
+	            </a>
+	            <h1 class="title">
+	                疯狂猜图
+	            </h1>
+	        </header>
+	    </div> -->
+	    <div class="main-container">
+	        <div class="main wrapper clearfix">
+	            <article>
+	                <div id="start-icon" style="width: 100px; height: 100px; background:url(img/icon-512.png); background-size:100%;">
+	                </div>
+	            </article>
+	            <aside>
+	                <h3 class="title">
+	                    算你牛逼，小豆子给你的智商跪了！输入手机号，福利到手！
+	                </h3>
+	                <p style="width: 80%; margin-left: 10%;">
+	                    <input type="tel" placeholder="请输入手机号" id="tel" class="btn_tel">
+	                 </p>
+	                 <p class="clearfix" style="width: 80%; margin-left: 10%;">
+	                 	<input type="tel" class="btn_input" id="code" placeholder="输入验证码">
+	                 	<button class="btn_but">获取验证码</button>
+	                 </p>
+	                 <p style="width: 80%; margin-left: 10%; position: relative;">
+	                 	<span class="err"></span>
+	                 	<button class="btn_get">点击拿大奖</button>
+	                 </p>
+	                 <p class="text">
+	                 	1.通关福利将会在3个工作日内以短信形式发送至您的手机<br>
+			2.领取方式：下载影豆App—我的—红包口令—输入口令领取，购票即可使用<br>
+			3.优惠券请在有效期内使用，不可叠加使用，不设找赎，最终解释权归影豆所有
+	                 </p>
+	            </aside>
+	        </div>
+	    </div>
+	</div>
+	<div id="pannel-overlay" class="none">
+	    <div id="pannel-help" class="pannel">
+	        <h4>
+	            分享“疯狂猜图&quot;！
+	        </h4>
+	        <div class="weixin none">
+	            点击右上方的
+	            <img src="img/weixin-share.jpg" width="50px" height="27px" alt="分享按钮"
+	            />
+	            ，或者
+	        </div>
+	        <div>
+	            <a class="btn btnCopyUrl">
+	                <i class="icon-url icon">
+	                </i>
+	                分享
+	            </a>
+	        </div>
+	    </div>
+	</div>
+
+       
+<script src="js/vendor/jquery-1.9.1.min.js"></script>
+<script src="js/vendor/mustache.js" type="text/javascript"></script>
+<script src="js/vendor/webtoolkit.sprintf.js" type="text/javascript"></script>
+<script src="js/vendor/preloadjs-0.3.1.min.js"></script>
+<script src="js/Util.js" type="text/javascript"></script>
+<script src="js/plugins.js"></script>
+<script src="js/ptwUI.js" type="text/javascript"></script>
+<script src="js/State.js" type="text/javascript"></script>
+<script src="js/Question.js" type="text/javascript"></script>
+<script src="js/PreloadState.js" type="text/javascript"></script>
+<script src="js/MenuState.js" type="text/javascript"></script>
+<script src="js/InGameState.js" type="text/javascript"></script>
+<script src="js/FinishState.js" type="text/javascript"></script>
+<script src="js/Controller.js" type="text/javascript"></script>
+<script>
+    var controller;
+    var canvas;
+    function init() {
+        ptwUI.init();
+        canvas = $("#container");
+        controller = new Controller(canvas);
+        ptwUI.controller = controller;
+        controller.startGame();
+        SM.RegisterState("preload", PreloadState);
+        SM.RegisterState("menu", MenuState);
+        SM.RegisterState("inGame", InGameState);
+        SM.RegisterState("finish", FinishState);
+        SM.SetStateByName("menu");
+    }
+    	$(".current-page").on("touchmove",function(e){
+    		e.preventDefault()
+    	})
+	$(".btn_get").on("click",function(){
+		isForm()
+		
+	})
+	function isForm() {
+		var info=["手机号不能为空","手机号码错误","验证码不能为空","验证码错误","领取成功"]
+		var telVal=$("#tel").val();
+		var codeVal=$("#code").val();
+		if(!telVal) {
+			$(".err").text(info[0]);
+			prompt();
+			return false;
+		}
+		else if(!(/^1[34578]\d{9}$/.test(telVal))) {
+			$(".err").text(info[1]);
+			prompt();
+			return false;
+		}
+		else if(!codeVal){
+			$(".err").text(info[2]);
+			prompt();
+			return false;
+		}
+
+	}
+	function prompt(){
+		
+		$(".err").addClass("errFadeIn")
+		setTimeout(function(){
+			$(".err").removeClass("errFadeIn")
+		},3000)
+	}
+	function share(){
+		//play68_submitScore(window.level);
+	}
+</script>
+<script type="text/x-jQuery-tmpl" id="questionTmpl">
+<div class='question none' id='question-{{ID}}'>
+    <article>
+        <div class='question-pic'>
+            <img src='{{imageUrl}}' alt='question' />
+            <div class='question-type'>
+                {{category}}
+            </div>
+        </div>
+        <ul class='question-answer clearfix'>
+            {{#answerArray}}
+            <li data-key='' class='answer-key'>
+            </li>
+            {{/answerArray}}
+        </ul>
+        <hr />
+    </article>
+    <aside>
+        <ul class='question-keyboard clearfix'>
+            {{#keyboardArray}}
+            <li data-key='{{value}}' data-index='{{index}}' class='question-key'>
+                {{value}}
+            </li>
+            {{/keyboardArray}}
+        </ul>
+    </aside>
+    <div class="clearfix" id="play-next">
+        <input id='answer-{{ID}}' type='text' />
+        <input class='btnNextQuestion' type='button' value='下一题'>
+        </input>
+    </div>
+</div>
+</script>
+<!-- baidu -->
+<div class="none">
+</div>
+
+<script src="./built/js/built-min.js"></script>
+<script>
+if(!!qike){
+    qike.util.subscribeModel.subscribe('qike-mobile-init',function(data,event){
+        // 初始化结束之后，立马设定一次分享内容
+        if (!!qike) {
+
+
+            if(controller && controller.currentQuestionLevel){
+                qikeContentPreSet.shareContent.title = qikeContentPreSet.endShareContentTitle;
+
+                // gameLevel
+                qikeContentPreSet.shareContent.desc = qikeContentPreSet.endShareContentPreFix + controller.currentQuestionLevel + qikeContentPreSet.endShareContentSuffix;
+                console.log('set desc')
+            }
+
+        }
+    });
+}
+
+</script>
+<script  type="text/JavaScript">
+window.shareData={
+  'title':'疯狂猜图',
+  'link':'http://game.ikongzhong.cn/games/fkct/',
+  'imgurl':'http://game.ikongzhong.cn/games/fkct/icon.png'
+}
+window.shareFriendData={
+  'title':'疯狂猜图',
+  'content':'关注空中传媒网络科技,更多好玩的游戏等着你。',
+  'link':'http://game.ikongzhong.cn/games/fkct/',
+  'imgurl':'http://game.ikongzhong.cn/games/fkct/icon.png'
+}
+</script>
+<!-- <script type="text/JavaScript" src="http://gc.veiying.cn/code"></script> -->
+</body>
+</html>
